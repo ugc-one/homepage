@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klinth | UGC Portfolio</title>
+<style>
+  /* Base Styles & Variables */
+  :root {
+    --bg-color: #f8f8f8;
+    --text-main: #111;
+    --highlight-cyan: #00e5ff;
+    --highlight-pink: #ff66b2;
+  }
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  /* 1. Large overlapping editorial text (Ref: b45fdbed-fd4f...jpg) */
+  .hero {
+    position: relative;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #fff;
+    border-bottom: 3px solid #000;
+  }
+  .hero h1 {
+    font-size: 18vw;
+    font-weight: 900;
+    color: var(--highlight-pink);
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 0.8;
+    letter-spacing: -2px;
+    z-index: 1;
+  }
+  .hero .script-text {
+    position: absolute;
+    font-family: 'Brush Script MT', 'Dancing Script', cursive;
+    font-size: 8vw;
+    color: #000;
+    z-index: 2;
+    transform: rotate(-10deg);
+  }
+
+  /* 2. Grid Layout (Ref: 81IEII4PLAL...jpg) */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 0px; /* Zero gap to create shared borders */
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .grid-item {
+    position: relative;
+    background: #fff;
+    border: 2px solid #000;
+    margin: -1px; /* Overlaps borders cleanly */
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 450px;
+  }
+  .grid-item:hover {
+    transform: scale(1.02);
+    box-shadow: 10px 10px 0px rgba(0,0,0,1);
+    z-index: 10;
+  }
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(120%);
+    transition: filter 0.3s ease;
+  }
+  .grid-item:hover img {
+    filter: grayscale(0%) contrast(100%);
+  }
+
+  /* 3. Floating Text Boxes (Ref: graphic design.jpg) */
+  .floating-tag {
+    position: absolute;
+    background-color: var(--highlight-cyan);
+    color: #000;
+    padding: 6px 12px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 2px solid #000;
+    z-index: 3;
+    pointer-events: none;
+    box-shadow: 4px 4px 0px #000;
+  }
+  .tag-top-left { top: 20px; left: 20px; }
+  .tag-bottom-right { 
+    bottom: 20px; 
+    right: 20px; 
+    text-align: right; 
+    max-width: 200px; 
+  }
+  .tag-pink { background-color: var(--highlight-pink); color: #fff;}
+
+  /* Clickable Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+  }
+  .modal-content {
+    background: #fff;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    border: 4px solid #000;
+    box-shadow: 15px 15px 0px var(--highlight-cyan);
+    position: relative;
+  }
+  .close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 2rem; color: #000;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1>Brands</h1>
+  <div class="script-text">loved by me</div>
+</section>
+
+<!-- Portfolio Showcase -->
+<section class="portfolio-grid">
+  
+  <!-- UGC Item 1 -->
+  <div class="grid-item" onclick="openModal('Skincare Routine', 'Short-form aesthetic video demonstrating morning skincare application with natural lighting.')">
+    <!-- Replace with your image -->
+    <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=800&auto=format&fit=crop" alt="UGC Skincare">
+    <div class="floating-tag tag-top-left">organic reach</div>
+    <div class="floating-tag tag-bottom-right">why toss it when you can reuse it?</div>
+  </div>
+
+  <!-- UGC Item 2: Pure Typography Block -->
+  <div class="grid-item" onclick="openModal('Design Services', 'Visual layout and set design for product shoots.')" style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
+    <div style="text-align: center;">
+        <h2 style="font-size: 3.5rem; margin: 0; text-transform: uppercase; line-height: 0.9;">Visual<br>Arts</h2>
+        <div class="floating-tag tag-pink" style="position:relative; display:inline-block; margin-top:20px; top:0; left:0;">2026 Collection</div>
+    </div>
+  </div>
+
+  <!-- UGC Item 3 -->
+  <div class="grid-item" onclick="openModal('Fashion Styling', 'Try-on haul and lookbook creation for sustainable fashion brands.')">
+    <!-- Replace with your image -->
+    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="UGC Fashion">
+    <div class="floating-tag tag-top-left tag-pink">dynamic cuts</div>
+  </div>
+
+</section>
+
+<!-- Pop-up Modal for Click Interaction -->
+<div class="modal" id="ugcModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle" style="text-transform: uppercase; font-size: 2rem; margin-top: 0;">Project Title</h2>
+    <p id="modalDesc" style="font-size: 1.2rem; line-height: 1.5;">Project description details...</p>
+    <button style="background:var(--highlight-cyan); border:2px solid #000; padding:10px 20px; font-weight:bold; cursor:pointer; margin-top: 20px;" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  function openModal(title, desc) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('ugcModal').style.display = 'flex';
+  }
+  function closeModal() {
+    document.getElementById('ugcModal').style.display = 'none';
+  }
+  
+  // Close modal if clicking outside the box
+  window.onclick = function(event) {
+    let modal = document.getElementById('ugcModal');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>

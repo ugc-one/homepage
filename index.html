@@ -20,7 +20,7 @@
     overflow-x: hidden;
   }
 
-  /* 1. Large overlapping editorial text (Ref: b45fdbed-fd4f...jpg) */
+  /* 1. Large overlapping editorial text */
   .hero {
     position: relative;
     height: 50vh;
@@ -40,17 +40,18 @@
     line-height: 0.8;
     letter-spacing: -2px;
     z-index: 1;
+    text-align: center;
   }
   .hero .script-text {
     position: absolute;
     font-family: 'Brush Script MT', 'Dancing Script', cursive;
-    font-size: 8vw;
+    font-size: 4.5vw; /* Adjusted smaller for the longer phrase */
     color: #000;
     z-index: 2;
     transform: rotate(-10deg);
   }
 
-  /* 2. Grid Layout (Ref: 81IEII4PLAL...jpg) */
+  /* 2. Grid Layout */
   .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -85,7 +86,7 @@
     filter: grayscale(0%) contrast(100%);
   }
 
-  /* 3. Floating Text Boxes (Ref: graphic design.jpg) */
+  /* 3. Floating Text Boxes */
   .floating-tag {
     position: absolute;
     background-color: var(--highlight-cyan);
@@ -141,8 +142,8 @@
 
 <!-- Hero Section -->
 <section class="hero">
-  <h1>Brands</h1>
-  <div class="script-text">loved by me</div>
+  <h1>One UGC</h1>
+  <div class="script-text">Všechny služby na jednom místě</div>
 </section>
 
 <!-- Portfolio Showcase -->

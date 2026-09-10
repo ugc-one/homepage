@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UGC One | UGC Portfolio</title>
+<title>One UGC | Portfolio</title>
 <style>
   /* Base Styles & Variables */
   :root {
@@ -106,6 +106,66 @@
     transform: rotate(-10deg);
   }
 
+  /* NEW: Brands Collaboration Banner */
+  .brands-banner {
+    padding: 40px 20px;
+    background: #fff;
+    border-bottom: 3px solid #000;
+    text-align: center;
+  }
+  .brands-banner h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #000;
+  }
+  .brands-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .brand-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    background: var(--bg-color);
+    box-shadow: 4px 4px 0px rgba(0,0,0,1);
+    /* Animation settings */
+    opacity: 0;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  
+  /* Staggered animation delays for the circles */
+  .brand-circle:nth-child(1) { animation-delay: 0.2s; }
+  .brand-circle:nth-child(2) { animation-delay: 0.4s; }
+  .brand-circle:nth-child(3) { animation-delay: 0.6s; }
+  .brand-circle:nth-child(4) { animation-delay: 0.8s; }
+  
+  @keyframes popIn {
+    0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Hover effect for brand circles */
+  .brand-circle:hover {
+    background: var(--highlight-cyan);
+    transform: scale(1.05) translateY(-5px);
+    transition: all 0.2s ease;
+  }
+
   /* 2. Grid Layout */
   .portfolio-grid {
     display: grid;
@@ -156,13 +216,10 @@
     box-shadow: 4px 4px 0px #000;
   }
   .tag-top-left { top: 20px; left: 20px; }
-  .tag-bottom-right { 
-    bottom: 20px; 
-    right: 20px; 
-    text-align: right; 
-    max-width: 200px; 
-  }
+  .tag-top-right { top: 20px; right: 20px; text-align: right; }
+  .tag-bottom-right { bottom: 20px; right: 20px; text-align: right; max-width: 300px; }
   .tag-pink { background-color: var(--highlight-pink); color: #fff;}
+  .tag-white { background-color: #fff; color: #000;}
 
   /* Clickable Modal Styles */
   .modal {
@@ -197,7 +254,7 @@
 
 <!-- Navigation -->
 <nav class="top-nav">
-  <div class="brand">UGC one</div>
+  <div class="brand">One UGC</div>
   <div class="nav-links">
     <a href="#portfolio">Portfolio</a>
     <a href="#sluzby">
@@ -214,6 +271,21 @@
   <div class="script-text">Portfolio</div>
 </section>
 
+<!-- NEW: Brands Collaboration Section -->
+<section class="brands-banner">
+  <h3>
+    <span class="cs">Značky, se kterými jsem navázala spolupráci</span>
+    <span class="en">Brands I've collaborated with</span>
+  </h3>
+  <div class="brands-wrapper">
+    <!-- Kolečka se postupně objeví díky animaci v CSS -->
+    <div class="brand-circle">Kiehl's</div>
+    <div class="brand-circle">Další</div>
+    <div class="brand-circle">Další</div>
+    <div class="brand-circle">Další</div>
+  </div>
+</section>
+
 <!-- Portfolio Showcase -->
 <section class="portfolio-grid">
   
@@ -221,12 +293,12 @@
   <div class="grid-item" onclick="openModal('<span class=\'cs\'>Péče o pleť</span><span class=\'en\'>Skincare Routine</span>', '<span class=\'cs\'>Krátké estetické video demonstrující ranní aplikaci péče o pleť s přirozeným světlem.</span><span class=\'en\'>Short-form aesthetic video demonstrating morning skincare application with natural lighting.</span>')">
     <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=800&auto=format&fit=crop" alt="UGC Skincare">
     <div class="floating-tag tag-top-left">
-      <span class="cs">social media content</span>
+      <span class="cs">kontent pro sociální média</span>
       <span class="en">social media content</span>
     </div>
     <div class="floating-tag tag-bottom-right">
-      <span class="cs">proč to vyhazovat, když to můžeš znovu použít?</span>
-      <span class="en">why toss it when you can reuse it?</span>
+      <span class="cs">management sociálních médií</span>
+      <span class="en">social media management</span>
     </div>
   </div>
 
@@ -247,22 +319,22 @@
   <div class="grid-item" onclick="openModal('<span class=\'cs\'>Módní styling</span><span class=\'en\'>Fashion Styling</span>', '<span class=\'cs\'>Zkoušení oblečení a tvorba lookbooku pro udržitelné módní značky.</span><span class=\'en\'>Try-on haul and lookbook creation for sustainable fashion brands.</span>')">
     <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="UGC Fashion">
     <div class="floating-tag tag-top-left tag-pink">
-      <span class="cs">brand content creation a editace</span>
-      <span class="en">brand content creation & editing</span>
+      <span class="cs">tvorba obsahu pro značky a jeho editace</span>
+      <span class="en">brand content creation and editing</span>
     </div>
   </div>
 
-  <!-- NEW UGC Item 4 -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Estetika interiéru</span><span class=\'en\'>Interior Aesthetics</span>', '<span class=\'cs\'>Interiérový styling ve stylu Japandi a 3D vizualizace pro značky do domácnosti.</span><span class=\'en\'>Japandi style interior styling and 3D visual renders for home brands.</span>')">
-    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="UGC Interior">
+  <!-- NEW UGC Item 4: Digitální produkty -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Digitální produkty</span><span class=\'en\'>Digital Products</span>', '<span class=\'cs\'>Tvorba digitálních produktů a materiálů pro vaši značku.</span><span class=\'en\'>Creation of digital products and materials for your brand.</span>')">
+    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Digital Products">
     <div class="floating-tag tag-bottom-right">
-      <span class="cs">domácí atmoška</span>
-      <span class="en">home vibe</span>
+      <span class="cs">digitální produkty pro značky</span>
+      <span class="en">digital products for brands</span>
     </div>
   </div>
 
-  <!-- NEW UGC Item 5: Typography / Color Block -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Rozbalování ve stylu ASMR a rychle střižené klipy.</span><span class=\'en\'>ASMR style unboxing and fast-paced editing clips.</span>')" style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
+  <!-- NEW UGC Item 5: Video Obsah -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Dynamická a poutavá tvorba videí pro všechny platformy.</span><span class=\'en\'>Dynamic and engaging video creation for all platforms.</span>')" style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
     <div style="text-align: center;">
         <h2 style="font-size: 3rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
           <span class="cs">Video<br>Obsah</span>
@@ -271,12 +343,17 @@
     </div>
   </div>
 
-  <!-- NEW UGC Item 6 -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Produktová fotografie</span><span class=\'en\'>Product Photography</span>', '<span class=\'cs\'>Detailně orientované stylizované záběry produktů pro e-shopy a sociální sítě.</span><span class=\'en\'>Detail-oriented stylized product shots for e-commerce and social media.</span>')">
-    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop" alt="UGC Product">
+  <!-- NEW UGC Item 6: Ads (Google, TikTok, Instagram) -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Výkonnostní kampaně</span><span class=\'en\'>Performance Campaigns</span>', '<span class=\'cs\'>Optimalizovaný obsah pro Google, TikTok a Instagram kampaně.</span><span class=\'en\'>Optimized content for Google, TikTok, and Instagram ad campaigns.</span>')">
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop" alt="Ads Content">
     <div class="floating-tag tag-top-left tag-pink">
-      <span class="cs">zaměřeno na detail</span>
-      <span class="en">detail-oriented</span>
+      TikTok Ads
+    </div>
+    <div class="floating-tag tag-top-right tag-white">
+      Google Ads
+    </div>
+    <div class="floating-tag tag-bottom-right">
+      Instagram Ads
     </div>
   </div>
 
@@ -334,9 +411,6 @@
     }
   }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>

@@ -20,6 +20,10 @@
     overflow-x: hidden;
   }
 
+  /* LANGUAGE SWITCHER LOGIC */
+  body.lang-cs .en { display: none !important; }
+  body.lang-en .cs { display: none !important; }
+
   /* Navigation Bar */
   .top-nav {
     display: flex;
@@ -39,6 +43,10 @@
     color: var(--text-main);
     letter-spacing: -1px;
   }
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
   .nav-links a {
     color: #000;
     text-decoration: none;
@@ -48,6 +56,23 @@
   }
   .nav-links a:hover {
     color: var(--highlight-pink);
+  }
+
+  /* Lang Toggle Button */
+  .lang-btn {
+    margin-left: 30px;
+    background: transparent;
+    border: 2px solid #000;
+    padding: 4px 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .lang-btn:hover {
+    background: var(--highlight-pink);
+    color: #fff;
+    border-color: var(--highlight-pink);
   }
 
   /* 1. Large overlapping editorial text */
@@ -75,7 +100,7 @@
   .hero .script-text {
     position: absolute;
     font-family: 'Brush Script MT', 'Dancing Script', cursive;
-    font-size: 8vw; /* Zvětšeno zpět pro kratší slovo */
+    font-size: 8vw; 
     color: #000;
     z-index: 2;
     transform: rotate(-10deg);
@@ -168,14 +193,18 @@
   }
 </style>
 </head>
-<body>
+<body class="lang-cs">
 
 <!-- Navigation -->
 <nav class="top-nav">
   <div class="brand">UGC one</div>
   <div class="nav-links">
     <a href="#portfolio">Portfolio</a>
-    <a href="#sluzby">Služby</a>
+    <a href="#sluzby">
+      <span class="cs">Služby</span>
+      <span class="en">Services</span>
+    </a>
+    <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">EN</button>
   </div>
 </nav>
 
@@ -188,44 +217,67 @@
 <!-- Portfolio Showcase -->
 <section class="portfolio-grid">
   
-  <!-- UGC Item 1 -->
-  <div class="grid-item" onclick="openModal('Skincare Routine', 'Short-form aesthetic video demonstrating morning skincare application with natural lighting.')">
+  <!-- UGC Item 1: Social Media Content -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Péče o pleť</span><span class=\'en\'>Skincare Routine</span>', '<span class=\'cs\'>Krátké estetické video demonstrující ranní aplikaci péče o pleť s přirozeným světlem.</span><span class=\'en\'>Short-form aesthetic video demonstrating morning skincare application with natural lighting.</span>')">
     <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=800&auto=format&fit=crop" alt="UGC Skincare">
-    <div class="floating-tag tag-top-left">organic reach</div>
-    <div class="floating-tag tag-bottom-right">why toss it when you can reuse it?</div>
-  </div>
-
-  <!-- UGC Item 2: Pure Typography Block -->
-  <div class="grid-item" onclick="openModal('Design Services', 'Visual layout and set design for product shoots.')" style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
-    <div style="text-align: center;">
-        <h2 style="font-size: 3.5rem; margin: 0; text-transform: uppercase; line-height: 0.9;">Visual<br>Arts</h2>
-        <div class="floating-tag tag-pink" style="position:relative; display:inline-block; margin-top:20px; top:0; left:0;">2026 Collection</div>
+    <div class="floating-tag tag-top-left">
+      <span class="cs">social media content</span>
+      <span class="en">social media content</span>
+    </div>
+    <div class="floating-tag tag-bottom-right">
+      <span class="cs">proč to vyhazovat, když to můžeš znovu použít?</span>
+      <span class="en">why toss it when you can reuse it?</span>
     </div>
   </div>
 
-  <!-- UGC Item 3 -->
-  <div class="grid-item" onclick="openModal('Fashion Styling', 'Try-on haul and lookbook creation for sustainable fashion brands.')">
+  <!-- UGC Item 2: Úspěchy a výsledky -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Designové služby</span><span class=\'en\'>Design Services</span>', '<span class=\'cs\'>Vizuální rozvržení a scénografie pro produktová focení.</span><span class=\'en\'>Visual layout and set design for product shoots.</span>')" style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
+    <div style="text-align: center;">
+        <h2 style="font-size: 2.8rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
+          <span class="cs">Úspěchy a<br>Výsledky</span>
+          <span class="en">Success &<br>Results</span>
+        </h2>
+        <div class="floating-tag tag-pink" style="position:relative; display:inline-block; margin-top:20px; top:0; left:0;">
+          2026
+        </div>
+    </div>
+  </div>
+
+  <!-- UGC Item 3: Brand content creation -->
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Módní styling</span><span class=\'en\'>Fashion Styling</span>', '<span class=\'cs\'>Zkoušení oblečení a tvorba lookbooku pro udržitelné módní značky.</span><span class=\'en\'>Try-on haul and lookbook creation for sustainable fashion brands.</span>')">
     <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="UGC Fashion">
-    <div class="floating-tag tag-top-left tag-pink">dynamic cuts</div>
+    <div class="floating-tag tag-top-left tag-pink">
+      <span class="cs">brand content creation a editace</span>
+      <span class="en">brand content creation & editing</span>
+    </div>
   </div>
 
   <!-- NEW UGC Item 4 -->
-  <div class="grid-item" onclick="openModal('Interior Aesthetics', 'Japandi style interior styling and 3D visual renders for home brands.')">
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Estetika interiéru</span><span class=\'en\'>Interior Aesthetics</span>', '<span class=\'cs\'>Interiérový styling ve stylu Japandi a 3D vizualizace pro značky do domácnosti.</span><span class=\'en\'>Japandi style interior styling and 3D visual renders for home brands.</span>')">
     <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="UGC Interior">
-    <div class="floating-tag tag-bottom-right">home vibe</div>
+    <div class="floating-tag tag-bottom-right">
+      <span class="cs">domácí atmoška</span>
+      <span class="en">home vibe</span>
+    </div>
   </div>
 
   <!-- NEW UGC Item 5: Typography / Color Block -->
-  <div class="grid-item" onclick="openModal('Video Content', 'ASMR style unboxing and fast-paced editing clips.')" style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Rozbalování ve stylu ASMR a rychle střižené klipy.</span><span class=\'en\'>ASMR style unboxing and fast-paced editing clips.</span>')" style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
     <div style="text-align: center;">
-        <h2 style="font-size: 3rem; margin: 0; text-transform: uppercase; line-height: 0.9;">Video<br>Content</h2>
+        <h2 style="font-size: 3rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
+          <span class="cs">Video<br>Obsah</span>
+          <span class="en">Video<br>Content</span>
+        </h2>
     </div>
   </div>
 
   <!-- NEW UGC Item 6 -->
-  <div class="grid-item" onclick="openModal('Product Photography', 'Detail-oriented stylized product shots for e-commerce and social media.')">
+  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Produktová fotografie</span><span class=\'en\'>Product Photography</span>', '<span class=\'cs\'>Detailně orientované stylizované záběry produktů pro e-shopy a sociální sítě.</span><span class=\'en\'>Detail-oriented stylized product shots for e-commerce and social media.</span>')">
     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop" alt="UGC Product">
-    <div class="floating-tag tag-top-left tag-pink">detail-oriented</div>
+    <div class="floating-tag tag-top-left tag-pink">
+      <span class="cs">zaměřeno na detail</span>
+      <span class="en">detail-oriented</span>
+    </div>
   </div>
 
 </section>
@@ -236,14 +288,38 @@
     <span class="close-btn" onclick="closeModal()">&times;</span>
     <h2 id="modalTitle" style="text-transform: uppercase; font-size: 2rem; margin-top: 0;">Project Title</h2>
     <p id="modalDesc" style="font-size: 1.2rem; line-height: 1.5;">Project description details...</p>
-    <button style="background:var(--highlight-cyan); border:2px solid #000; padding:10px 20px; font-weight:bold; cursor:pointer; margin-top: 20px;" onclick="closeModal()">Zavřít</button>
+    <button style="background:var(--highlight-cyan); border:2px solid #000; padding:10px 20px; font-weight:bold; cursor:pointer; margin-top: 20px;" onclick="closeModal()">
+      <span class="cs">Zavřít</span>
+      <span class="en">Close</span>
+    </button>
   </div>
 </div>
 
 <script>
-  function openModal(title, desc) {
-    document.getElementById('modalTitle').innerText = title;
-    document.getElementById('modalDesc').innerText = desc;
+  // Language Toggle Logic
+  let currentLang = 'cs';
+  
+  function toggleLanguage() {
+    const body = document.body;
+    const btn = document.getElementById('langToggleBtn');
+    
+    if (currentLang === 'cs') {
+      body.classList.remove('lang-cs');
+      body.classList.add('lang-en');
+      btn.innerText = 'CZ'; 
+      currentLang = 'en';
+    } else {
+      body.classList.remove('lang-en');
+      body.classList.add('lang-cs');
+      btn.innerText = 'EN';
+      currentLang = 'cs';
+    }
+  }
+
+  // Modal Logic
+  function openModal(titleHTML, descHTML) {
+    document.getElementById('modalTitle').innerHTML = titleHTML;
+    document.getElementById('modalDesc').innerHTML = descHTML;
     document.getElementById('ugcModal').style.display = 'flex';
   }
   function closeModal() {

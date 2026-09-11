@@ -106,7 +106,7 @@
     transform: rotate(-10deg);
   }
 
-  /* Brands Collaboration Banner (Slimmer) */
+  /* Brands Collaboration Banner */
   .brands-banner {
     padding: 20px 20px 25px;
     background: #fff;
@@ -219,25 +219,32 @@
   .tag-white { background-color: #fff; color: #000;}
 
   /* =========================================
-     MAC OS MODAL (CLICK TO OPEN)
+     MAC OS MODAL (HOVER 94% + CLICK 100%) 
      ========================================= */
   .mac-overlay {
-    display: none; /* Skryté dokud se neklikne */
+    display: none; 
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
     z-index: 2000;
     justify-content: center;
     align-items: center;
+    padding: 3vw; 
+    box-sizing: border-box;
+    /* DŮLEŽITÉ: Při hoveru nesmí overlay zachytávat kliknutí myši */
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+  
+  /* Stav "Uzamčeno kliknutím" */
+  .mac-overlay.locked-mode {
+    pointer-events: auto; /* Zablokuje stránku na pozadí, aktivuje okno */
+    background: rgba(255,255,255,0.1); /* Jemný světlý blur na celou obrazovku */
+    backdrop-filter: blur(2px);
   }
 
   .mac-window {
-    width: 90vw; 
-    max-width: 1000px;
-    height: 80vh;
-    max-height: 700px;
-    background: var(--highlight-pink);
+    width: 100%; 
+    height: 100%;
     border: 6px solid #000;
     border-radius: 16px;
     display: flex;
@@ -245,22 +252,28 @@
     overflow: hidden;
     box-shadow: 15px 15px 0px rgba(0,0,0,1);
     position: relative;
-    animation: slideUp 0.3s ease-out forwards;
+    /* Při najetí zprůhlední (94%) a sklo (blur), při kliknutí sytá barva */
+    transition: all 0.2s ease;
+    background: rgba(255, 102, 178, 0.94); 
+    backdrop-filter: blur(4px);
+    transform: scale(0.98);
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  .locked-mode .mac-window {
+    background: rgba(255, 102, 178, 1); /* 100% Opaque po kliknutí */
+    transform: scale(1);
+    backdrop-filter: none;
   }
 
   .mac-header {
-    height: 50px;
+    height: 55px;
     background: var(--highlight-pink);
     border-bottom: 6px solid #000;
     display: flex;
     align-items: center;
     padding: 0 20px;
     gap: 12px;
+    flex-shrink: 0;
   }
   
   .mac-dot {
@@ -274,41 +287,80 @@
   
   .mac-close {
     margin-left: auto;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 900;
     line-height: 1;
     color: #000;
     cursor: pointer;
     transition: color 0.2s;
+    display: none; /* Skryto během hoveru */
+  }
+  .locked-mode .mac-close {
+    display: block;
   }
   .mac-close:hover {
     color: #fff;
   }
 
-  /* Body s béžovou mřížkou */
+  /* Průhledné tělo okna */
   .mac-body {
     flex-grow: 1;
-    position: relative;
-    background-color: #f4f0e6;
-    background-image: 
-      linear-gradient(rgba(0,0,0,0.1) 2px, transparent 2px),
-      linear-gradient(90deg, rgba(0,0,0,0.1) 2px, transparent 2px);
-    background-size: 50px 50px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px;
+    padding: 40px;
+    text-align: center;
   }
 
-  /* Bílý box s textem uvnitř mřížky */
-  .mac-content {
+  #modalTitle {
+    text-transform: uppercase; 
+    font-size: 3.5rem; 
+    margin-top: 0; 
+    margin-bottom: 30px;
+    color: #000;
+    text-shadow: 
+      2px 2px 0px #fff, 
+     -2px -2px 0px #fff, 
+      2px -2px 0px #fff, 
+     -2px 2px 0px #fff,
+      4px 4px 0px #fff;
+  }
+
+  .desc-box {
     background: #fff;
     border: 4px solid #000;
-    padding: 40px;
+    padding: 30px 40px;
     max-width: 600px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 10px 10px 0px #000;
+    box-shadow: 8px 8px 0px #000;
+  }
+
+  #modalDesc {
+    font-size: 1.3rem; 
+    line-height: 1.6; 
+    margin: 0;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .btn-close-large {
+    background: var(--highlight-cyan); 
+    border: 4px solid #000; 
+    padding: 12px 40px; 
+    font-weight: 900; 
+    cursor: pointer; 
+    margin-top: 40px; 
+    font-size: 1.2rem;
+    box-shadow: 6px 6px 0px #000;
+    transition: transform 0.2s ease;
+    display: none; /* Skryto během hoveru */
+  }
+  .locked-mode .btn-close-large {
+    display: inline-block;
+  }
+  .btn-close-large:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px #000;
   }
 </style>
 </head>
@@ -347,11 +399,14 @@
   </div>
 </section>
 
-<!-- Portfolio Showcase -->
+<!-- Portfolio Showcase (Nyní s onmouseenter a onmouseleave) -->
 <section class="portfolio-grid">
   
-  <!-- UGC Item 1: Social Media Content -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Péče o pleť</span><span class=\'en\'>Skincare Routine</span>', '<span class=\'cs\'>Krátké estetické video demonstrující ranní aplikaci péče o pleť s přirozeným světlem.</span><span class=\'en\'>Short-form aesthetic video demonstrating morning skincare application with natural lighting.</span>')">
+  <!-- UGC Item 1 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Péče o pleť</span><span class=\'en\'>Skincare Routine</span>', '<span class=\'cs\'>Krátké estetické video demonstrující ranní aplikaci péče o pleť s přirozeným světlem.</span><span class=\'en\'>Short-form aesthetic video demonstrating morning skincare application with natural lighting.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()">
     <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=800&auto=format&fit=crop" alt="UGC Skincare">
     <div class="floating-tag tag-top-left">
       <span class="cs">kontent pro sociální média</span>
@@ -363,8 +418,12 @@
     </div>
   </div>
 
-  <!-- UGC Item 2: Úspěchy a výsledky -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Úspěchy 2026</span><span class=\'en\'>Success 2026</span>', '<span class=\'cs\'>Analýza výkonu a růst dosahu mých UGC kampaní.</span><span class=\'en\'>Performance analysis and reach growth of my UGC campaigns.</span>')" style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
+  <!-- UGC Item 2 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Úspěchy 2026</span><span class=\'en\'>Success 2026</span>', '<span class=\'cs\'>Analýza výkonu a růst dosahu mých UGC kampaní.</span><span class=\'en\'>Performance analysis and reach growth of my UGC campaigns.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()"
+       style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
     <div style="text-align: center;">
         <h2 style="font-size: 2.8rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
           <span class="cs">Úspěchy a<br>Výsledky</span>
@@ -376,8 +435,11 @@
     </div>
   </div>
 
-  <!-- UGC Item 3: Brand content creation -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Módní styling</span><span class=\'en\'>Fashion Styling</span>', '<span class=\'cs\'>Zkoušení oblečení a tvorba lookbooku pro udržitelné módní značky.</span><span class=\'en\'>Try-on haul and lookbook creation for sustainable fashion brands.</span>')">
+  <!-- UGC Item 3 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Módní styling</span><span class=\'en\'>Fashion Styling</span>', '<span class=\'cs\'>Zkoušení oblečení a tvorba lookbooku pro udržitelné módní značky.</span><span class=\'en\'>Try-on haul and lookbook creation for sustainable fashion brands.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()">
     <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="UGC Fashion">
     <div class="floating-tag tag-top-left tag-pink">
       <span class="cs">tvorba obsahu pro značky a jeho editace</span>
@@ -385,8 +447,11 @@
     </div>
   </div>
 
-  <!-- NEW UGC Item 4: Digitální produkty -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Digitální produkty</span><span class=\'en\'>Digital Products</span>', '<span class=\'cs\'>Tvorba digitálních produktů a materiálů pro vaši značku.</span><span class=\'en\'>Creation of digital products and materials for your brand.</span>')">
+  <!-- UGC Item 4 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Digitální produkty</span><span class=\'en\'>Digital Products</span>', '<span class=\'cs\'>Tvorba digitálních produktů a materiálů pro vaši značku.</span><span class=\'en\'>Creation of digital products and materials for your brand.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()">
     <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Digital Products">
     <div class="floating-tag tag-bottom-right">
       <span class="cs">digitální produkty pro značky</span>
@@ -394,8 +459,12 @@
     </div>
   </div>
 
-  <!-- NEW UGC Item 5: Video Obsah -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Dynamická a poutavá tvorba videí pro všechny platformy.</span><span class=\'en\'>Dynamic and engaging video creation for all platforms.</span>')" style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
+  <!-- UGC Item 5 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Dynamická a poutavá tvorba videí pro všechny platformy.</span><span class=\'en\'>Dynamic and engaging video creation for all platforms.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()"
+       style="display:flex; align-items:center; justify-content:center; background:var(--highlight-cyan); color:#000;">
     <div style="text-align: center;">
         <h2 style="font-size: 3rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
           <span class="cs">Video<br>Obsah</span>
@@ -404,8 +473,11 @@
     </div>
   </div>
 
-  <!-- NEW UGC Item 6: Ads (Google, TikTok, Instagram) -->
-  <div class="grid-item" onclick="openModal('<span class=\'cs\'>Výkonnostní kampaně</span><span class=\'en\'>Performance Campaigns</span>', '<span class=\'cs\'>Optimalizovaný obsah pro Google, TikTok a Instagram kampaně.</span><span class=\'en\'>Optimized content for Google, TikTok, and Instagram ad campaigns.</span>')">
+  <!-- UGC Item 6 -->
+  <div class="grid-item" 
+       onmouseenter="previewModal('<span class=\'cs\'>Výkonnostní kampaně</span><span class=\'en\'>Performance Campaigns</span>', '<span class=\'cs\'>Optimalizovaný obsah pro Google, TikTok a Instagram kampaně.</span><span class=\'en\'>Optimized content for Google, TikTok, and Instagram ad campaigns.</span>')"
+       onmouseleave="hidePreview()"
+       onclick="lockModal()">
     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop" alt="Ads Content">
     <div class="floating-tag tag-top-left tag-pink">
       TikTok Ads
@@ -420,27 +492,24 @@
 
 </section>
 
-<!-- MAC OS MODAL -->
+<!-- MAC OS MODAL (Hover preview & Click lock) -->
 <div class="mac-overlay" id="macModalOverlay">
   <div class="mac-window">
-    <!-- Header -->
     <div class="mac-header">
       <div class="mac-dot dot-p"></div>
       <div class="mac-dot dot-b"></div>
       <div class="mac-dot dot-l"></div>
       <div class="mac-close" onclick="closeModal()">&times;</div>
     </div>
-    <!-- Body with Grid -->
     <div class="mac-body">
-      <!-- White Content Box -->
-      <div class="mac-content">
-        <h2 id="modalTitle" style="text-transform: uppercase; font-size: 2.5rem; margin-top: 0; margin-bottom: 20px;">Title</h2>
-        <p id="modalDesc" style="font-size: 1.3rem; line-height: 1.6;">Description...</p>
-        <button style="background:var(--highlight-cyan); border:2px solid #000; padding:10px 30px; font-weight:bold; cursor:pointer; margin-top: 30px; font-size: 1.1rem;" onclick="closeModal()">
-          <span class="cs">Zavřít</span>
-          <span class="en">Close</span>
-        </button>
+      <h2 id="modalTitle">Title</h2>
+      <div class="desc-box">
+        <p id="modalDesc">Description...</p>
       </div>
+      <button class="btn-close-large" onclick="closeModal()">
+        <span class="cs">Zavřít</span>
+        <span class="en">Close</span>
+      </button>
     </div>
   </div>
 </div>
@@ -466,21 +535,40 @@
     }
   }
 
-  // Mac Modal Logic
-  function openModal(titleHTML, descHTML) {
+  // Hover & Lock Modal Logic
+  let isModalLocked = false;
+
+  function previewModal(titleHTML, descHTML) {
+    if (isModalLocked) return;
     document.getElementById('modalTitle').innerHTML = titleHTML;
     document.getElementById('modalDesc').innerHTML = descHTML;
-    document.getElementById('macModalOverlay').style.display = 'flex';
+    
+    const overlay = document.getElementById('macModalOverlay');
+    overlay.style.display = 'flex';
   }
-  
-  function closeModal() {
+
+  function hidePreview() {
+    if (isModalLocked) return;
     document.getElementById('macModalOverlay').style.display = 'none';
+  }
+
+  function lockModal() {
+    isModalLocked = true;
+    const overlay = document.getElementById('macModalOverlay');
+    overlay.classList.add('locked-mode');
+  }
+
+  function closeModal() {
+    isModalLocked = false;
+    const overlay = document.getElementById('macModalOverlay');
+    overlay.classList.remove('locked-mode');
+    overlay.style.display = 'none';
   }
   
   // Close modal if user clicks outside the window (on the dark background)
   window.onclick = function(event) {
     let overlay = document.getElementById('macModalOverlay');
-    if (event.target == overlay) {
+    if (event.target == overlay && isModalLocked) {
       closeModal();
     }
   }

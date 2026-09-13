@@ -230,7 +230,6 @@
     align-items: center;
     padding: 20px; 
     box-sizing: border-box;
-    /* Transparentní při hoveru */
     background: rgba(0,0,0,0); 
     pointer-events: none;
     transition: background 0.3s ease;
@@ -238,7 +237,6 @@
   
   .mac-overlay.locked-mode {
     pointer-events: auto; 
-    /* Tmavé pozadí podle obrázku po kliknutí */
     background: rgba(0,0,0,0.7); 
   }
 
@@ -252,12 +250,9 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Masivní černý stín podle obrázku */
     box-shadow: 15px 15px 0px rgba(0,0,0,1);
     position: relative;
     transition: all 0.2s ease;
-    
-    /* Lehká průhlednost během hoveru */
     opacity: 0.94; 
     transform: scale(0.98);
   }
@@ -295,10 +290,10 @@
     color: #000;
     cursor: pointer;
     transition: color 0.2s;
-    display: none; /* Během hoveru neviditelné */
+    display: none; 
   }
   .locked-mode .mac-close {
-    display: block; /* Po kliknutí se objeví */
+    display: block; 
   }
   .mac-close:hover {
     color: #fff;
@@ -311,7 +306,6 @@
     align-items: center;
     justify-content: center;
     padding: 30px;
-    /* Béžová mřížka s jemnou průhledností na hover */
     background-color: rgba(244, 240, 230, 0.95);
     background-image: 
       linear-gradient(rgba(0,0,0,0.1) 2px, transparent 2px),
@@ -319,7 +313,6 @@
     background-size: 50px 50px;
   }
 
-  /* Vnitřní bílý box pro obsah */
   .desc-box {
     background: #fff;
     border: 6px solid #000;
@@ -405,12 +398,12 @@
 <!-- Portfolio Showcase -->
 <section class="portfolio-grid">
   
-  <!-- UGC Item 1 -->
+  <!-- UGC Item 1: Nastaveno na socialmedia.png -->
   <div class="grid-item" 
-       onmouseenter="previewModal('<span class=\'cs\'>Péče o pleť</span><span class=\'en\'>Skincare Routine</span>', '<span class=\'cs\'>Krátké estetické video demonstrující ranní aplikaci péče o pleť s přirozeným světlem.</span><span class=\'en\'>Short-form aesthetic video demonstrating morning skincare application with natural lighting.</span>')"
+       onmouseenter="previewModal('<span class=\'cs\'>Kontent pro sociální média</span><span class=\'en\'>Social Media Content</span>', '<span class=\'cs\'>Tvorba poutavého obsahu a komplexní správa sociálních sítí.</span><span class=\'en\'>Creating engaging content and comprehensive social media management.</span>')"
        onmouseleave="hidePreview()"
        onclick="lockModal()">
-    <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=800&auto=format&fit=crop" alt="UGC Skincare">
+    <img src="socialmedia.png" alt="Social Media Content">
     <div class="floating-tag tag-top-left">
       <span class="cs">kontent pro sociální média</span>
       <span class="en">social media content</span>
@@ -495,7 +488,7 @@
 
 </section>
 
-<!-- MAC OS MODAL (Grid version from image) -->
+<!-- MAC OS MODAL -->
 <div class="mac-overlay" id="macModalOverlay">
   <div class="mac-window">
     <div class="mac-header">
@@ -568,7 +561,6 @@
     overlay.style.display = 'none';
   }
   
-  // Close modal if user clicks outside the window (on the dark background)
   window.onclick = function(event) {
     let overlay = document.getElementById('macModalOverlay');
     if (event.target == overlay && isModalLocked) {

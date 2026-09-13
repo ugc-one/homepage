@@ -219,7 +219,7 @@
   .tag-white { background-color: #fff; color: #000;}
 
   /* =========================================
-     MAC OS MODAL: GRID DESIGN (IMAGE MATCH)
+     MAC OS MODAL: DYNAMIC SIZING (HOVER VS CLICK)
      ========================================= */
   .mac-overlay {
     display: none; 
@@ -240,6 +240,7 @@
     background: rgba(0,0,0,0.7); 
   }
 
+  /* Výchozí velikost při najetí myší (Menší / Kompaktní) */
   .mac-window {
     width: 90vw; 
     max-width: 850px; 
@@ -252,12 +253,17 @@
     overflow: hidden;
     box-shadow: 15px 15px 0px rgba(0,0,0,1);
     position: relative;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     opacity: 0.94; 
     transform: scale(0.98);
   }
 
-  .locked-mode .mac-window {
+  /* Větší velikost (širší a vyšší) POUZE po kliknutí (locked-mode) */
+  .mac-overlay.locked-mode .mac-window {
+    width: 95vw;
+    max-width: 1200px;
+    height: 88vh;
+    max-height: 800px;
     opacity: 1; 
     transform: scale(1);
   }
@@ -324,6 +330,13 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    transition: max-width 0.3s ease;
+  }
+
+  /* Větší vnitřní box po kliknutí */
+  .mac-overlay.locked-mode .desc-box {
+    max-width: 800px;
+    padding: 50px 40px;
   }
 
   #modalTitle {
@@ -334,11 +347,19 @@
     color: #000;
   }
 
+  .mac-overlay.locked-mode #modalTitle {
+    font-size: 3.2rem;
+  }
+
   #modalDesc {
     font-size: 1.2rem; 
     line-height: 1.6; 
     margin: 0;
     color: #000;
+  }
+
+  .mac-overlay.locked-mode #modalDesc {
+    font-size: 1.4rem;
   }
 
   .btn-close-large {
@@ -398,7 +419,7 @@
 <!-- Portfolio Showcase -->
 <section class="portfolio-grid">
   
-  <!-- UGC Item 1: Nastaveno na socialmedia.png -->
+  <!-- UGC Item 1 -->
   <div class="grid-item" 
        onmouseenter="previewModal('<span class=\'cs\'>Kontent pro sociální média</span><span class=\'en\'>Social Media Content</span>', '<span class=\'cs\'>Tvorba poutavého obsahu a komplexní správa sociálních sítí.</span><span class=\'en\'>Creating engaging content and comprehensive social media management.</span>')"
        onmouseleave="hidePreview()"

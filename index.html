@@ -188,8 +188,8 @@
     z-index: 10;
   }
   
-  /* OPRAVA: Vynucené vyplnění rámečku pro obrázky a videa + Z-index */
-  .grid-item img, .grid-item video {
+  /* Vynucené vyplnění rámečku pro obrázky a nově definovanou třídu videa */
+  .grid-item img, .bg-video {
     position: absolute;
     top: 0;
     left: 0;
@@ -200,7 +200,7 @@
     transition: filter 0.3s ease;
     z-index: 1;
   }
-  .grid-item:hover img, .grid-item:hover video {
+  .grid-item:hover img, .grid-item:hover .bg-video {
     filter: grayscale(0%) contrast(100%);
   }
 
@@ -479,13 +479,17 @@
     </div>
   </div>
 
-  <!-- UGC Item 5: AKTUALIZOVÁNO NA VIDEO (Očištěno od starých stylů) -->
+  <!-- UGC Item 5: VIDEO OBSAH -->
   <div class="grid-item" 
        onmouseenter="previewModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Dynamická a poutavá tvorba videí pro všechny platformy.</span><span class=\'en\'>Dynamic and engaging video creation for all platforms.</span>')"
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <video src="videoobsah.mp4" autoplay loop muted playsinline></video>
+    <!-- Opravené volání videa pomocí source tagu pro lepší kompatibilitu -->
+    <video autoplay loop muted playsinline class="bg-video">
+      <source src="./videoobsah.mp4" type="video/mp4">
+      Váš prohlížeč nepodporuje přehrávání videa.
+    </video>
     
     <div class="floating-tag tag-top-left tag-pink">
       <span class="cs">video tvorba</span>

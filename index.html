@@ -187,13 +187,18 @@
     box-shadow: 10px 10px 0px rgba(0,0,0,1);
     z-index: 10;
   }
-  /* UPDATE: Added video to inherit the exact same styles as img */
+  
+  /* OPRAVA: Vynucené vyplnění rámečku pro obrázky a videa + Z-index */
   .grid-item img, .grid-item video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: grayscale(20%) contrast(120%);
     transition: filter 0.3s ease;
+    z-index: 1;
   }
   .grid-item:hover img, .grid-item:hover video {
     filter: grayscale(0%) contrast(100%);
@@ -209,7 +214,7 @@
     font-weight: bold;
     font-size: 1.1rem;
     border: 2px solid #000;
-    z-index: 3;
+    z-index: 3; /* Zajišťuje, že štítky plavou NAD obrázkem/videem */
     pointer-events: none;
     box-shadow: 4px 4px 0px #000;
   }
@@ -220,7 +225,7 @@
   .tag-white { background-color: #fff; color: #000;}
 
   /* =========================================
-     MAC OS MODAL: DYNAMIC SIZING (HOVER VS CLICK)
+     MAC OS MODAL: DYNAMIC SIZING
      ========================================= */
   .mac-overlay {
     display: none; 
@@ -433,13 +438,13 @@
     </div>
   </div>
 
-  <!-- UGC Item 2 -->
+  <!-- UGC Item 2: Úspěchy 2026 -->
   <div class="grid-item" 
        onmouseenter="previewModal('<span class=\'cs\'>Úspěchy 2026</span><span class=\'en\'>Success 2026</span>', '<span class=\'cs\'>Analýza výkonu a růst dosahu mých UGC kampaní.</span><span class=\'en\'>Performance analysis and reach growth of my UGC campaigns.</span>')"
        onmouseleave="hidePreview()"
        onclick="lockModal()"
        style="display:flex; align-items:center; justify-content:center; background:#111; color:#fff;">
-    <div style="text-align: center;">
+    <div style="text-align: center; position: relative; z-index: 2;">
         <h2 style="font-size: 2.8rem; margin: 0; text-transform: uppercase; line-height: 0.9;">
           <span class="cs">Úspěchy a<br>Výsledky</span>
           <span class="en">Success &<br>Results</span>
@@ -474,7 +479,7 @@
     </div>
   </div>
 
-  <!-- UGC Item 5: AKTUALIZOVÁNO NA VIDEO -->
+  <!-- UGC Item 5: AKTUALIZOVÁNO NA VIDEO (Očištěno od starých stylů) -->
   <div class="grid-item" 
        onmouseenter="previewModal('<span class=\'cs\'>Video obsah</span><span class=\'en\'>Video Content</span>', '<span class=\'cs\'>Dynamická a poutavá tvorba videí pro všechny platformy.</span><span class=\'en\'>Dynamic and engaging video creation for all platforms.</span>')"
        onmouseleave="hidePreview()"

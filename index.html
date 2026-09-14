@@ -188,7 +188,6 @@
     z-index: 10;
   }
   
-  /* Vynucené vyplnění rámečku pro obrázky a nově definovanou třídu videa */
   .grid-item img, .bg-video {
     position: absolute;
     top: 0;
@@ -214,7 +213,7 @@
     font-weight: bold;
     font-size: 1.1rem;
     border: 2px solid #000;
-    z-index: 3; /* Zajišťuje, že štítky plavou NAD obrázkem/videem */
+    z-index: 3; 
     pointer-events: none;
     box-shadow: 4px 4px 0px #000;
   }
@@ -455,12 +454,20 @@
     </div>
   </div>
 
-  <!-- UGC Item 3 -->
+  <!-- UGC Item 3: Tvorba a editace brandových materiálů -->
   <div class="grid-item" 
-       onmouseenter="previewModal('<span class=\'cs\'>Módní styling</span><span class=\'en\'>Fashion Styling</span>', '<span class=\'cs\'>Zkoušení oblečení a tvorba lookbooku pro udržitelné módní značky.</span><span class=\'en\'>Try-on haul and lookbook creation for sustainable fashion brands.</span>')"
+       onmouseenter="previewModal('<span class=\'cs\'>Tvorba a editace</span><span class=\'en\'>Content Creation</span>', '<span class=\'cs\'>Komplexní tvorba a editace brandových materiálů.</span><span class=\'en\'>Comprehensive creation and editing of brand materials.</span>')"
        onmouseleave="hidePreview()"
        onclick="lockModal()">
-    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="UGC Fashion">
+    
+    <!-- NOVÉ: Video download (1).mp4 namísto původního obrázku -->
+    <!-- Pro bezpečné načtení URL s mezerou z GitHubu používáme znak %20 -->
+    <video autoplay loop muted playsinline onended="this.play()" class="bg-video">
+      <source src="./download%20(1).mp4" type="video/mp4">
+      Váš prohlížeč nepodporuje přehrávání videa.
+    </video>
+
+    <!-- Zůstal růžový tag, jak jste si přála -->
     <div class="floating-tag tag-top-left tag-pink">
       <span class="cs">tvorba obsahu pro značky a jeho editace</span>
       <span class="en">brand content creation and editing</span>
@@ -485,16 +492,11 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <!-- Opravené volání videa pomocí source tagu pro lepší kompatibilitu -->
-    <video autoplay loop muted playsinline class="bg-video">
+    <video autoplay loop muted playsinline onended="this.play()" class="bg-video">
       <source src="./videoobsah.mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
     
-    <div class="floating-tag tag-top-left tag-pink">
-      <span class="cs">video tvorba</span>
-      <span class="en">video creation</span>
-    </div>
   </div>
 
   <!-- UGC Item 6 -->

@@ -460,7 +460,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <video autoplay loop muted playsinline onended="this.play()" class="bg-video">
+    <!-- POJISTKA PRO OPAKOVÁNÍ VIDEA: preload="auto" + this.currentTime=0 -->
+    <video autoplay loop muted playsinline preload="auto" onended="this.currentTime=0; this.play();" class="bg-video">
       <source src="./download%20(1).mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
@@ -477,7 +478,6 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
        
-    <!-- Nový obrázek -->
     <img src="vezmi%20si%20co%20potřebuješ%20(1).jpg" alt="Digital Products">
     
     <div class="floating-tag tag-bottom-right">
@@ -492,7 +492,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <video autoplay loop muted playsinline onended="this.play()" class="bg-video">
+    <!-- POJISTKA PRO OPAKOVÁNÍ VIDEA: preload="auto" + this.currentTime=0 -->
+    <video autoplay loop muted playsinline preload="auto" onended="this.currentTime=0; this.play();" class="bg-video">
       <source src="./videoobsah.mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>

@@ -460,8 +460,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <!-- POJISTKA PRO OPAKOVÁNÍ VIDEA: preload="auto" + this.currentTime=0 -->
-    <video autoplay loop muted playsinline preload="auto" onended="this.currentTime=0; this.play();" class="bg-video">
+    <!-- Odebráno problematické inline onended, loop řeší nový JS níže -->
+    <video autoplay loop muted playsinline class="bg-video">
       <source src="./download%20(1).mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
@@ -492,8 +492,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <!-- POJISTKA PRO OPAKOVÁNÍ VIDEA: preload="auto" + this.currentTime=0 -->
-    <video autoplay loop muted playsinline preload="auto" onended="this.currentTime=0; this.play();" class="bg-video">
+    <!-- Odebráno problematické inline onended, loop řeší nový JS níže -->
+    <video autoplay loop muted playsinline class="bg-video">
       <source src="./videoobsah.mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
@@ -598,6 +598,34 @@
       closeModal();
     }
   }
+
+  // ==========================================
+  // GITHUB PAGES VIDEO LOOP FIX
+  // Tento kód načte videa do paměti a zajistí bezchybnou smyčku
+  // ==========================================
+  document.addEventListener("DOMContentLoaded", function() {
+    const videos = document.querySelectorAll('video.bg-video');
+    
+    videos.forEach(video => {
+      const source = video.querySelector('source');
+      if (source) {
+        const videoUrl = source.getAttribute('src');
+        
+        // Stáhnout video do mezipaměti
+        fetch(videoUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            const objectUrl = URL.createObjectURL(blob);
+            video.src = objectUrl;
+            video.load(); // Přinutí prohlížeč vzít novou URL
+            video.play().catch(e => console.log("Video autoplay zabráněno:", e));
+          })
+          .catch(error => {
+             console.error("Chyba při načítání videa pro smyčku:", error);
+          });
+      }
+    });
+  });
 </script>
 
 </body>

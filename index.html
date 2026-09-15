@@ -460,7 +460,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <video autoplay muted playsinline class="bg-video">
+    <!-- Odebráno problematické inline onended, loop řeší nový JS níže -->
+    <video autoplay loop muted playsinline class="bg-video">
       <source src="./download%20(1).mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
@@ -491,8 +492,8 @@
        onmouseleave="hidePreview()"
        onclick="lockModal()">
     
-    <!-- Prohlížeče tu někdy ignorují atribut 'loop', ten proto řešíme pomocí JS na konci souboru -->
-    <video autoplay muted playsinline class="bg-video">
+    <!-- Odebráno problematické inline onended, loop řeší nový JS níže -->
+    <video autoplay loop muted playsinline class="bg-video">
       <source src="./videoobsah.mp4" type="video/mp4">
       Váš prohlížeč nepodporuje přehrávání videa.
     </video>
@@ -599,25 +600,30 @@
   }
 
   // ==========================================
-  // AGRESIVNÍ OPRAVA PRO ZASEKÁVAJÍCÍ SE VIDEA
+  // GITHUB PAGES VIDEO LOOP FIX
+  // Tento kód načte videa do paměti a zajistí bezchybnou smyčku
   // ==========================================
   document.addEventListener("DOMContentLoaded", function() {
     const videos = document.querySelectorAll('video.bg-video');
     
     videos.forEach(video => {
-      // 1. Záchytný bod těsně PŘED koncem videa
-      video.addEventListener('timeupdate', function() {
-        if (this.duration && this.currentTime >= this.duration - 0.2) {
-          this.currentTime = 0;
-          this.play().catch(e => console.log(e));
-        }
-      });
-      
-      // 2. Záložní bod, pokud by přesto video došlo až na konec
-      video.addEventListener('ended', function() {
-        this.currentTime = 0;
-        this.play().catch(e => console.log(e));
-      });
+      const source = video.querySelector('source');
+      if (source) {
+        const videoUrl = source.getAttribute('src');
+        
+        // Stáhnout video do mezipaměti
+        fetch(videoUrl)
+          .then(response => response.blob())
+          .then(blob => {
+            const objectUrl = URL.createObjectURL(blob);
+            video.src = objectUrl;
+            video.load(); // Přinutí prohlížeč vzít novou URL
+            video.play().catch(e => console.log("Video autoplay zabráněno:", e));
+          })
+          .catch(error => {
+             console.error("Chyba při načítání videa pro smyčku:", error);
+          });
+      }
     });
   });
 </script>
